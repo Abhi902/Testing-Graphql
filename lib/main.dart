@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing/provider/Api/api.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
   runApp(
@@ -29,7 +30,35 @@ class _LoginScreenState extends State<LoginScreen>
       appBar: AppBar(
         title: Text('testing'),
       ),
-      body: mutation(),
+      body: Query(
+          options: QueryOptions(
+            document: gql(r"""
+      query ExampleQuery {
+      countries {
+          name
+                 }
+        }
+ """),
+          ),
+          builder: (QueryResult result,
+              {VoidCallback? refetch, FetchMore? fetchMore}) {
+            if (result.data == null) {
+              return Text('no data found');
+            }
+            print(result.data);
+            return Container(
+              color: Colors.black,
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                      height: 20,
+                      child:
+                          Text('${result.data?['countries'][index]['name']}'));
+                },
+                itemCount: result.data?['countries']?.length,
+              ),
+            );
+          }),
     );
   }
 }
