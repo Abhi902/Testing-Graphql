@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:http/http.dart';
+import 'package:testing/provider/Api/api.dart';
 
 void main() {
   runApp(
@@ -17,39 +15,6 @@ void main() {
   );
 }
 
-String query = '''
-''';
-TextEditingController username = TextEditingController();
-TextEditingController fullname = TextEditingController();
-
-class Equippp_login extends StatefulWidget {
-  const Equippp_login({Key? key}) : super(key: key);
-
-  @override
-  State<Equippp_login> createState() => _Equippp_loginState();
-}
-
-class _Equippp_loginState extends State<Equippp_login> {
-  @override
-  Widget build(BuildContext context) {
-    final HttpLink httpLink =
-        HttpLink('https://countries.trevorblades.com/graphql');
-
-    final ValueNotifier<GraphQLClient> client = ValueNotifier(
-      GraphQLClient(
-        link: httpLink as Link,
-        // The default store is the InMemoryStore, which does NOT persist to disk
-        cache: GraphQLCache(),
-      ),
-    );
-
-    return GraphQLProvider(
-      client: client,
-      child: LoginScreen(),
-    );
-  }
-}
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -57,11 +22,25 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController? controller;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('testing'),
+      ),
+      body: mutation(),
+    );
+  }
+}
+
+/*
+
+
+ AnimationController? controller;
   Animation? animation;
 
-  @override
-  void initState() {
+ void initState() {
     super.initState();
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
@@ -74,15 +53,11 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Mutation(
-        options: MutationOptions(
-          document: gql(query),
-        ),
-        builder: (RunMutation insert, QueryResult? result) {
-          return Padding(
+
+TextEditingController username = TextEditingController();
+TextEditingController fullname = TextEditingController();
+
+Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -177,9 +152,4 @@ class _LoginScreenState extends State<LoginScreen>
                 Text('Result :${result?.data?.toString()}'),
               ],
             ),
-          );
-        },
-      ),
-    );
-  }
-}
+          );*/
