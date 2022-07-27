@@ -43,6 +43,33 @@ class mutation extends StatefulWidget {
 class _mutationState extends State<mutation> {
   @override
   Widget build(BuildContext context) {
-    return Text('you want me to return something');
+    return Query(
+        options: QueryOptions(
+          document: gql(r"""
+      query ExampleQuery {
+      countries {
+          name
+                 }
+        }
+ """),
+        ),
+        builder: (QueryResult result,
+            {VoidCallback? refetch, FetchMore? fetchMore}) {
+          if (result.data == null) {
+            return Text('no data found');
+          }
+          print(result.data);
+          return Container(
+            color: Colors.black,
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                    height: 20,
+                    child: Text('${result.data?['countries'][index]['name']}'));
+              },
+              itemCount: result.data?['countries']?.length,
+            ),
+          );
+        });
   }
 }

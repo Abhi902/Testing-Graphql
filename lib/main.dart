@@ -29,32 +29,7 @@ class _LoginScreenState extends State<LoginScreen>
       appBar: AppBar(
         title: Text('testing'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'INDIA',
-            style: TextStyle(
-                fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            'USA',
-            style: TextStyle(
-                fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            'Canada',
-            style: TextStyle(
-                fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
+      body: mutation(),
     );
   }
 }
