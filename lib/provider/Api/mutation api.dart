@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:testing/main.dart';
 import 'package:testing/mutation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-class controller extends StatefulWidget {
-  const controller({Key? key}) : super(key: key);
+class mutationcontroller extends StatefulWidget {
+  const mutationcontroller({Key? key}) : super(key: key);
 
   @override
-  State<controller> createState() => _controllerState();
+  State<mutationcontroller> createState() => _mutationcontrollerState();
 }
 
-class _controllerState extends State<controller> {
+class _mutationcontrollerState extends State<mutationcontroller> {
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink('https://api.spacex.land/graphql/');
@@ -22,6 +21,6 @@ class _controllerState extends State<controller> {
       ),
     );
 
-    return GraphQLProvider(client: client, child: LoginScreen());
+    return GraphQLProvider(client: client, child: mutation());
   }
 }

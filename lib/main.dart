@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testing/provider/Api/api.dart';
+import 'package:testing/mutation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
@@ -11,7 +11,7 @@ void main() {
           bodyLarge: TextStyle(color: Colors.white),
         ),
       ),
-      home: Equippp_login(),
+      home: LoginScreen(),
     ),
   );
 }
@@ -30,35 +30,53 @@ class _LoginScreenState extends State<LoginScreen>
       appBar: AppBar(
         title: Text('testing'),
       ),
-      body: Query(
-          options: QueryOptions(
-            document: gql(r"""
-      query ExampleQuery {
-      countries {
-          name
+      body: Column(
+        children: <Widget>[
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => mutation()));
+              },
+              child: Icon(Icons.ac_unit_outlined)),
+          Container(
+            height: 600,
+            child: Query(
+              options: QueryOptions(
+                document: gql(r"""  
+           query ExampleQuery {
+            histories {
+                  title
+                    }
                  }
-        }
- """),
-          ),
-          builder: (QueryResult result,
-              {VoidCallback? refetch, FetchMore? fetchMore}) {
-            if (result.data == null) {
-              return Text('no data found');
-            }
-            print(result.data);
-            return Container(
-              color: Colors.black,
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      height: 20,
-                      child:
-                          Text('${result.data?['countries'][index]['name']}'));
-                },
-                itemCount: result.data?['countries']?.length,
+            """),
               ),
-            );
-          }),
+              builder: (QueryResult result,
+                  {VoidCallback? refetch, FetchMore? fetchMore}) {
+                if (result.data == null) {
+                  return Text(
+                    'no data found',
+                    style: TextStyle(color: Colors.black),
+                  );
+                }
+                print(result.data);
+                return Container(
+                  height: 400,
+                  color: Colors.black,
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                          height: 20,
+                          child: Text(
+                              '${result.data?['histories'][index]['title']}'));
+                    },
+                    itemCount: result.data?['histories']?.length,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
